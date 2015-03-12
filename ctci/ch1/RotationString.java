@@ -24,9 +24,8 @@ public class RotationString {
       return false;
     }
     return isSubString(str1, str2 + str2);
-    // return isSubString(str1.toLowerCase(), str2.toLowerCase() + str2.toLowerCase());
     // return (str2 + str2).contains(str1);
-    // return ((str2 + str2).indexOf(str1) > -1) ? true : false;
+    // return ((str2 + str2).indexOf(str1) > -1);
   }
 
   /*
