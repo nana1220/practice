@@ -1,3 +1,5 @@
+package ch1arraysandstrings;
+
 import java.lang.Character;
 import java.lang.Integer;
 import java.lang.String;

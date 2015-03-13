@@ -1,3 +1,7 @@
+package ch1arraysandstrings;
+
+import java.lang.String;
+import java.lang.System;
 import java.util.Arrays;
 
 public class UniqueCharacters {

@@ -1,4 +1,7 @@
+package ch1arraysandstrings;
+
 import java.lang.System;
+import java.lang.String;
 
 public class RotateMatrix {
 

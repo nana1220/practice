@@ -1,3 +1,8 @@
+package ch1arraysandstrings;
+
+import java.lang.String;
+import java.lang.System;
+
 public class SetZeros4Matrix {
   public static void main(String[] args) {
     int[][] matrix = new int[][] {

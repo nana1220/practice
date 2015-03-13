@@ -1,3 +1,5 @@
+package ch1arraysandstrings;
+
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.System;

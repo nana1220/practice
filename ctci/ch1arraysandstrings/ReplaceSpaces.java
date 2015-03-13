@@ -1,3 +1,6 @@
+package ch1arraysandstrings;
+
+import java.lang.String;
 import java.lang.System;
 
 public class ReplaceSpaces {
