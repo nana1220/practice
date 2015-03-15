@@ -1,6 +1,3 @@
 /*
- * implement a singly/doubly linked list
+ * implement a doubly linked list
  */
-class Node {
-
-}

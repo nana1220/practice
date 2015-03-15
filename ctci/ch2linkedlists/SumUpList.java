@@ -103,7 +103,7 @@ public class SumUpList {
 
   /*
    * digits are organized in reverse order
-   * use forward recursive impl,
+   * use forward recursive impl, input parameters change per recursion
    */
   static ListNode<Integer> forwardSum(ListNode<Integer> list1, ListNode<Integer> list2, int overTen) {
     if (list1 == null && list2 == null && overTen == 0) {
@@ -125,7 +125,7 @@ public class SumUpList {
 
   /*
    * digits are organized in forward order
-   * use backward recursive impl,
+   * use backward recursive impl, returned values change per recursion
    *
    * Instead of using static carry or a reference class of carry, can also use a wrapper
    * class for both sumList and carry (overTen), then propagate it through the recursion.
