@@ -9,6 +9,14 @@ public class TreeNode {
   TreeNode right = null;
   TreeNode parent = null;
 
+  public TreeNode() {
+    val = 0;
+  }
+
+  public TreeNode(int val) {
+    this.val = val;
+  }
+
   void printTree() {
     LinkedList<TreeNode> queue = new LinkedList<ch4treesandgraphs.TreeNode>();
     System.out.println(this.val); // level 1, the root, depth 0
