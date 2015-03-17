@@ -11,14 +11,18 @@ public class DFS {
     if (root == null) {
       return;
     }
-    root.visited = true; // mark visited (process), forward recursion
+    // mark visited (process current node)
+    // forward recursion can manipulate variables and pass to method parameters for next recursion
+    root.visited = true;
     root.print(); // process node
     for (Node child : root.children) {
       if (!child.visited) {
         // process first child first at each level
         traverseRecur(child); // go to next level, if children == null, return
       }
-    }// can also mark (process) after recursive calls, backward recursion
+    }
+    // can also mark (process) after recursive calls
+    // backward recursion can manipulate return values and pass to previous recursion
   }
 
   static void traverseIterative(Node root) {
