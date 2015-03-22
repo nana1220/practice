@@ -1,5 +1,5 @@
-import java.lang.String;
-import java.lang.System;
+package basics;
+
 import java.util.LinkedList;
 
 /*

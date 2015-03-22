@@ -1,6 +1,6 @@
-import java.lang.String;
+package basics;
+
 import java.util.Stack;
-import java.lang.System;
 
 /*
  * DFS impl. recursive and iterative
