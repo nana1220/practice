@@ -6,6 +6,9 @@ Input is guaranteed to be within the range from 1 to 3999.
 
 public class RomanToInteger {
 
+  /*
+   * a simplified trie tree
+   */
   public int romanToInt(String s) {
     int[] radix = new int[] {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
     String[] romans = new String[] {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X",
