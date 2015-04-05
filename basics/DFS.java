@@ -3,6 +3,10 @@ package basics;
 import java.util.Stack;
 
 /*
+ * parent recursion pass information to child recursion through parameters
+ * child recursion pass information to parent through return value
+ * parent and child share information through reference parameters or static/global variables
+ *
  * DFS impl. recursive and iterative
  */
 public class DFS {

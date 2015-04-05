@@ -21,4 +21,19 @@ public class RemoveDuplicatesFromSortedArray {
     }
     return len;
   }
+
+
+  // Soution2: Maintain two pointers, one for current index, and one for result index
+  // time: O(n); space:O(1)
+  public int removeDuplicates(int[] A) {
+    if (A==null || A.length==0) return 0;
+    int i=1, j=1, N =A.length;
+    while (j< N){
+      if (A[j] == A[j-1])
+        j++;
+      else
+        A[i++] = A[j++];
+    }
+    return i;
+  }
 }

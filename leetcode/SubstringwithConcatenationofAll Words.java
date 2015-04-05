@@ -15,38 +15,87 @@ You should return the indices: [0,9].
 public class SubstringwithConcatenationofAllWords {
   /*
    * Time Limit Exceeded: TODO
-   * use a map store words and their frequencies from L,
-   * traverse S by the same step (Note: words are of same length), find a match substract its
-   * frequency by 1, or remove it if frequency = 0, when the map is empty return index of first word
-   * L can have duplicated words
+   * Two maps, found map and target map
    */
   public List<Integer> findSubstring(String S, String[] L) {
     List<Integer> res = new ArrayList<Integer>();
-    Map<String, Integer> wordCount = new HashMap<String, Integer>();
+    Map<String, Integer> found = new HashMap<String, Integer>();
+    Map<String, Integer> target = new HashMap<String, Integer>();
     for (String w : L) {
-      Integer freq = wordCount.get(w);
-      if (freq == null) wordCount.put(w, 1);
-      else wordCount.put(w, freq + 1);
+      found.put(w, 0);
+      Integer freq = target.get(w);
+      if (freq == null) target.put(w, 1);
+      else target.put(w, freq + 1);
     }
     int wlen = L[0].length();
     int num = L.length;
     if (S.length() < wlen * num) return res;
-    for (int i = 0; i <= S.length() - wlen * num; ) {
-      Map<String, Integer> copymap = new HashMap<String, Integer>(wordCount); // NOTE: make a copy
-      for (int j = 0; j < wlen* num; j = j + wlen) {
-        String word = S.substring(i + j, i +j + wlen);
-        if (copymap.containsKey(word)) {
-          if ((copymap.get(word) == 1)) {
-            copymap.remove(word);
-            if (copymap.isEmpty()) {
-              res.add(i);
-              break;
-            }
-          } else wordCount.put(word, copymap.get(word)-1);
+
+    // NOTE!!!!!: i from 0 to wlen - 1, then j start from i to end with step wlen
+    for (int i = 0; i < wlen; i++) {
+      int count = 0;
+      int start = i;
+      for (int j = i; j <= S.length() - wlen; j += wlen) {
+        String word = S.substring(j, j + wlen);
+        if (!target.containsKey(word)) {
+          for (String w : found.keySet()) found.put(w, 0);
+          count = 0;
+          start = j + wlen;
+          continue;
         } else {
-          i = i + 1; // NOTE: when doesn't find a match, step for i is 1 !!!!!!
-          break;
+          if (found.get(word) < target.get(word)) {
+            found.put(word, found.get(word) + 1);
+            count++;
+            // there are enough current words in the window, move start until skip the word same as current word
+            // the second solution doesn't consider this case, use i from start to end cover this case
+          } else {
+            while (!S.substring(start, start + wlen).equals(word)) {
+              String startword = S.substring(start, start + wlen);
+              found.put(startword, found.get(startword) - 1);
+              count--;
+            }
+            start += wlen;
+          }
         }
+        if (count == num) {
+          res.add(start);
+          String startword = S.substring(start, start + wlen);
+          found.put(startword, found.get(startword) - 1); // remove start, keep find another valid string
+          start = j + wlen;
+          count--;
+        }
+      }
+    }
+    return res;
+  }
+}
+
+// PASS
+public class Solution {
+  public static ArrayList<Integer> findSubstring(String S, String[] L) {
+    ArrayList<Integer> res = new ArrayList<Integer>();
+    if (S==null || S.length()==0 || L==null || L.length==0) return res;
+    int n = L[0].length(), m=S.length();
+    if (m < L.length * n)  return res;
+    Map<String, Integer> dict = new HashMap<String, Integer>();
+    for (String w : L){
+      if (dict.containsKey(w))    dict.put(w, dict.get(w)+1);
+      else dict.put(w, 1);
+    }
+    for (int i=0; i <= m-n*L.length; i++){          // i<= m - n*L.length, important here; if i<m, TLE
+      Map<String, Integer> tmp = new HashMap<String, Integer>(dict);
+      int j=i;
+      while (j+n <= m){
+        String w = S.substring(j, j+n);
+        // if a word is too many, also break, don't consider move head, too complicated
+        // instead i covers all range!!!!!!!!!!!!!!
+        if (!tmp.containsKey(w)) break;
+        tmp.put(w, tmp.get(w)-1);
+        if (tmp.get(w) == 0)    tmp.remove(w);
+        if (tmp.isEmpty()){
+          res.add(i); break;
+        }
+        j += n;
       }
     }
     return res;
