@@ -19,28 +19,55 @@ class Person1 {
 /*
  * Large scale, hash table store Person ID, machine ID
  */
-class Server {
-  HashMap<Integer, Machine> machines; // or use UUID
-  HashMap<Integer, Integer> persionToMachine;
+public class Server {
+  HashMap<Integer, Machine> machines = new HashMap<Integer, Machine>();
+  HashMap<Integer, Integer> personToMachineMap = new HashMap<Integer, Integer>();
 
-  Machine getMachineById(Integer machineId) {
-    return machines.get(machineId);
+  public Machine getMachineWithId(int machineID) {
+    return machines.get(machineID);
   }
 
-  Integer getMachineForPerson(Integer personId) {
-    return persionToMachine(persionId);
+  public int getMachineIDForUser(int personID) {
+    Integer machineID = personToMachineMap.get(personID);
+    return machineID == null ? -1 : machineID;
   }
 
-  Person getPersonById(Integer personId) {
-    Integer machineId = getMachineForPerson(personId);
-    Machine machine = getMachineById(machineId);
-    machine.getPersonById(personId);
+  public Person getPersonWithID(int personID) {
+    Integer machineID = personToMachineMap.get(personID);
+    if (machineID == null) {
+      return null;
+    }
+    Machine machine = getMachineWithId(machineID);
+    if (machine == null) {
+      return null;
+    }
+    return machine.getPersonWithID(personID);
   }
 }
 
-class Person {
-  Integer personId;
-  ArrayList<Person> friends;
+public class Person {
+  private ArrayList<Integer> friends;
+  private int personID;
+  private String info;
+
+  public String getInfo() { return info; }
+  public void setInfo(String info) {
+    this.info = info;
+  }
+
+  public int[] getFriends() {
+    int[] temp = new int[friends.size()];
+    for (int i = 0; i < temp.length; i++) {
+      temp[i] = friends.get(i);
+    }
+    return temp;
+  }
+  public int getID() { return personID; }
+  public void addFriend(int id) { friends.add(id); }
+
+  public Person(int id) {
+    this.personID = id;
+  }
 }
 
 class Machine {

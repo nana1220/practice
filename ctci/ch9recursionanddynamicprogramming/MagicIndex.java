@@ -45,35 +45,35 @@ public class MagicIndex {
    * because array is sorted, use BST to find
    */
   static int getIndexBst1(int[] arr, int first, int last) {
-    if (first >= last) return -1;
+    if (first > last) return -1;
     int mid = (first + last) / 2;
     if (arr[mid] == mid) {
       return mid;
     }
     if (arr[mid] > mid) {
-      return getIndexBst1(arr, first, mid);
+      return getIndexBst1(arr, first, mid - 1);
+    } else {
+      return getIndexBst1(arr, mid + 1, last);
     }
-    return getIndexBst1(arr, mid + 1, last);
   }
 
   /*
    * duplicated values, if one side cannot find result, recurse another side
-   * last is one position off the end, that is ,last == arr.length
    */
   static int getIndexBst2(int[] arr, int first, int last) {
-    if (first >= last) return -1;
+    if (first > last || first < 0 || last >= arr.length) return -1;
     int mid = (first + last) / 2;
     if (arr[mid] == mid) {
       return mid;
     }
     int res;
     if (arr[mid] > mid) {
-      res = getIndexBst2(arr, first, mid);
+      res = getIndexBst2(arr, first, mid - 1);
       if (res == -1) res = getIndexBst2(arr, arr[mid], last);
       return res;
     }
     res = getIndexBst2(arr, mid + 1, last);
-    if (res == -1) res = getIndexBst2(arr, first, arr[mid] + 1);
+    if (res == -1) res = getIndexBst2(arr, first, arr[mid]);
     return res;
   }
 

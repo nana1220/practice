@@ -5,6 +5,12 @@ package ch11sortingandsearching;
  * order, write a method to find an element.
  */
 
+/*
+do binary search on every row to find the element. This
+algorithm will be 0(M log(N)), since there are M rows and it takes 0(log(N)) time
+to search each one.
+ */
+
 import java.lang.System;
 import java.util.Arrays;
 

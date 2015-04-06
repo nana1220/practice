@@ -23,7 +23,7 @@ public class LongestIncreasingSubsequence {
    * time: O(n^2)
    */
   public static ArrayList<Integer> getSubsequence(ArrayList<Integer> sequence, int end) {
-    if (end == -1) return new ArrayList<Integer>();
+    if (end < 0 || end > sequence.size()) return null;
     int prev = end - 1;
     ArrayList<Integer> longestSeq = new ArrayList<Integer>();
     while (prev >= 0) {

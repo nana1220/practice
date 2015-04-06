@@ -24,6 +24,7 @@ public class PermutationString {
   }
 
   /*
+   * O(n!)
    * permutation of length n String is equal to insert n-th char into every spots of permutation
    * of length n-1 String
    */

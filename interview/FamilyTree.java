@@ -37,3 +37,55 @@ public class FamilyTree {
     }
   }
 }
+
+//solu2
+public class Person {
+  Person[] parents;
+}
+
+  // naming for cousins is: n th cousin m times removed
+// where n is the min generations to a common ancestor and m is the number of generations difference between the 2 cousins
+// so this is going to be O((2^n+m)+2) which is still more efficient than dfs assuming the num generations in the population is > n+m
+  public boolean bloodRelated(Person p1, Person p2) {
+    // simple search would go down p1's children/grandchildren/etc and see if we find p2
+    // then vice versa
+    // then worry about cousin style relationships
+    // here we'd go up the parent tree on both until we found a common node (or ran out of data)
+
+    // we could take this last approach anyway and it would get us a parent-child match too
+    Set<Person> p1Ancestors = new HashSet<Person>();
+    Set<Person> p2Ancestors = new HashSet<Person>();
+
+    // so ideally here we're going to do BFS, but we're going to do 2 at once to try to minimise the depth we have to go
+    List<Person> p1Discovered = new LinkedList<Person>();
+    p1Discovered.add(p1);
+    List<Person> p2Discovered = new LinkedList<Person>();
+    p2Discovered.add(p2);
+
+    while (!p1Discovered.isEmpty() || !p2Discovered.isEmpty()) {
+      Person nextP1 = p1Discovered.remove(0);
+      if (nextP1 != null) {
+        if (p2Ancestors.contains(nextP1)) {
+          return true;
+        }
+
+        for (Person parent : nextP1.parents) {
+          p1Discovered.add(parent);
+        }
+        p1Ancestors.add(nextP1);
+      }
+
+      Person nextP2 = p2Discovered.remove(0);
+      if (nextP2 != null) {
+        if (p1Ancestors.contains(nextP2)) {
+          return true;
+        }
+
+        for (Person parent : nextP2.parents) {
+          p2Discovered.add(parent);
+        }
+        p2Ancestors.add(nextP2);
+      }
+    }
+    return false;
+  }

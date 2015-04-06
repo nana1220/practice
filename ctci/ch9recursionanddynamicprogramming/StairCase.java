@@ -6,6 +6,22 @@ package ch9recursionanddynamicprogramming;
  * can run up the stairs.
  */
 public class StairCase {
+
+  public static int countWaysDP(int n, int[] map) {
+    if (n < 0) {
+      return 0;
+    } else if (n == 0) {
+      return 1;
+    } else if (map[n] > -1) {
+      return map[n];
+    } else { // last step can be finished by either 1 step, 2 step and 3 step
+      map[n] = countWaysDP(n - 1, map) +
+          countWaysDP(n - 2, map) +
+          countWaysDP(n - 3, map);
+      return map[n];
+    }
+  }
+
   /*
    * top-down approach: starting from n
    */

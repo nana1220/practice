@@ -41,6 +41,7 @@ public class EightQueues {
  */
   static void storeWays(ArrayList<Point[]> ways, Point[] way, int row) {
     if (row == 8) {
+      // Arrays.copyOf(way);
       ways.add(way.clone()); // must clone before add to result
       return;
     }

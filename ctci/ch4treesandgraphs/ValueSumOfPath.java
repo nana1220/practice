@@ -47,6 +47,7 @@ public class ValueSumOfPath {
     }
     path.add(root); // no need for a level parameter, path.size() == level
     int pathSum = 0;
+    // for loop is log(n), call for loop on n nodes, so nlog(n)
     for (int i = path.size() - 1; i >= 0; i--) { // add from current node back up
       pathSum += path.get(i).val;
       if (pathSum == sum) {

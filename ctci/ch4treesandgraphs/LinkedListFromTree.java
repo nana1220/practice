@@ -76,7 +76,7 @@ public class LinkedListFromTree {
 
   /*
    * BFS, a better impl. no need to use additional queue
-   * time O(N), space O(N)
+   * time O(N), space O(N) ( O(N) for data O(log(N)) for recursive stack, so O(N) )
    */
   static ArrayList<LinkedList<TreeNode>> createListsBFS2(TreeNode root) {
     if (root == null) {

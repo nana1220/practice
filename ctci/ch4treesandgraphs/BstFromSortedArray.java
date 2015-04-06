@@ -45,14 +45,14 @@ public class BstFromSortedArray {
    * Note: no need to copy array, just use first and last index indicating array's range
    * also return root node instead of return void
    */
-  static TreeNode createTree2(int[] sortedArray, int first, int last) { // last: exclusive
-    if (first >= last) {
+  static TreeNode createTree2(int[] sortedArray, int first, int last) { // last: inclusive
+    if (first > last) {
       return null;
     }
     TreeNode root = new TreeNode();
     int mid = (first + last) / 2;
     root.val = sortedArray[mid];
-    root.left = createTree2(sortedArray, first, mid);
+    root.left = createTree2(sortedArray, first, mid - 1);
     root.right = createTree2(sortedArray, mid + 1, last);
     return root;
   }

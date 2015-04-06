@@ -10,6 +10,7 @@ package ch4treesandgraphs;
 
 /*
  * implement case 3
+ * log(n)
  */
 public class FindCommonAncestor {
   // top-down approach
@@ -26,7 +27,13 @@ public class FindCommonAncestor {
 
   /*
    * call isAncestor as getLCA1, top-down approach
-   * time: O(n) if tree is balanced, worst case O(n^2)
+   * time: O(n) if tree is balanced (2^(log(n)) = n), worst case O(n^2)
+   *
+   * This algorithm runs in O(n) time on a balanced tree.This is because isAncestor is called on
+2n nodes in the first call (n nodes for the left side, and n nodes for the right side). After
+that, the algorithm branches left or right, at which point isAncestor will be called on 2n/2
+nodes, then 2n/4, and so on.This results in a runtime of 0(n).
+
    */
   static TreeNode getLCA0(TreeNode root, TreeNode node1, TreeNode node2) {
     if (root == null) {
@@ -50,6 +57,8 @@ public class FindCommonAncestor {
 
   /*
    * call isAncestor but traverse  bottom-up
+   * only search the entire tree once to find p and
+q. We should then be able to "bubble up" the findings to earlier nodes in the stac
    */
   static TreeNode getLCA1(TreeNode root, TreeNode node1, TreeNode node2) {
     if (root == null || node1 == null || node2 == null) {

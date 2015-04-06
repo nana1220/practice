@@ -22,14 +22,11 @@ public class InOrderSuccessor {
     }
     // until child is the left child of child.parent or child.parent == root
     TreeNode child = node;
-    // Note: second condition can also use child.parent.left != child
-    while (child.parent != null && child.parent.val < child.val) {
-      child = child.parent;
+    TreeNode father = node.parent;
+    while (father != null && father.left != child) {
+      child = father;
+      father = father.parent;
     }
-    if (child.parent == null) {
-      return null;
-    } else {
-      return child.parent;
-    }
+    return father;
   }
 }

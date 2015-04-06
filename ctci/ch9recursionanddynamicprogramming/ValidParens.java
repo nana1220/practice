@@ -38,7 +38,7 @@ public class ValidParens {
     if (leftRem < 0 || rightRem < leftRem) return; // invalid state
 
     if (leftRem == 0 && rightRem == 0) { // no more parens left
-      String s = String.copyValueOf(str); // Note: char array to String
+      String s = new String(str); // Note: char array to String
       list.add(s);
     } else {
       // go left subtree if valid
