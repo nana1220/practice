@@ -67,6 +67,24 @@ class solution {
 37:      }
 38:      return result;
 39:    }
+（1）先排序
+（2）扫一遍数组，用hash来记录当前的数是第几个数。
+比如 [1,2,3,3,5,5,5,10] => H[1] = 1,H[2] = 2,H[3] = 3,H[5] = 4,H[10] = 5
+int prev = arr[0]; map.put(prev, 1); int pos = 2;
+for( int i = 1; i < arr.length; i++) {
+ if (arr[i] != prev) { map.put(arr[i], pos++); prev = arr[i];} }
+（3）类似3SUM的方法，写二重循环，用two pointer来求解。时间复杂度O（N^2)
+  for (i = 0;i < N;i++) {
+     start = i + 1;
+     end = N - 1;
+     while (start < end) {
+        while (A + A[start] + A[end] > T) end--;
+        count += Q[A[end]] - Q[A[start]];   // A, A[start] + ? 的个数-google 1point3acres
+        start++;
+}
+
+
+
 
 [Some tricks]
 1. Line 21 and Line 22.

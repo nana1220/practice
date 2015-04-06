@@ -36,7 +36,7 @@ public class AreaCodeTrie {
       NumberNode curr = root;
       for (int i = 0; i < number.length(); i++) {
         int idx = number.charAt(i) - '0';
-        if (curr.children[]==null){
+        if (curr.children[idx]==null){
           curr.children[idx]=new NumberNode("");
         }
         curr = curr.children[idx];

@@ -13,7 +13,7 @@ import java.util.Iterator;
 
 public class ImplementIteratorWithPeek {
 
-  public class ArrayList<E> implements Iterator<E> {
+  public class ArrayList<E> implements Iterable<E> {
     private Object[] elems;
     private int size;
 

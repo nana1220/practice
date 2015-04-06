@@ -26,10 +26,10 @@ class Solution {
         c[cur] ++;
       }
       else if(a[i] >= 0 && cur >= size){
-        c[size - 1]++;
+        c[a.length]++;
       }
     }
-    for(int i = c.length - 1; i > 0; i--){
+    for(int i = a.length; i > 0; i--){
       c[i - 1] += c[i];
       if(i <= c[i]){
         return i;

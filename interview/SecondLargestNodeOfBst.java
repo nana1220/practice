@@ -13,7 +13,8 @@ public class SecondLargestNodeOfBst {
     // NOTE: edge case, if only one node in the BST, return null
     if (root == null || (root.left == null && root.right == null)) return null;
     Stack<Node> path = new Stack<Node>(); // NOTE: store path to the right most node
-    while(root != null) {
+    Node node = root;
+    while(node != null) {
       stack.push(node);
       node = node.next;
     }
