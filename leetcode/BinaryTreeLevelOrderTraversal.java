@@ -24,27 +24,28 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-
-// use a tmp arraylist, don't have to count number of nodes in a level
 public class Solution {
   public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
-    ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
-    if (root ==null)
+    ArrayList<ArrayList<Integer>> res = new  ArrayList<ArrayList<Integer>> ();
+    if(root==null){
       return res;
-    ArrayList<TreeNode> r = new ArrayList<TreeNode>(); // current level
-    r.add(root);
-    while (!r.isEmpty()){
-      ArrayList<TreeNode> tmp = new ArrayList<TreeNode>(); // next level
-      ArrayList<Integer> nums = new ArrayList<Integer>();
-      for (TreeNode curr:r){
-        nums.add(curr.val); // add current level node value
-        if (curr.left!=null)
-          tmp.add(curr.left); // add next level node
-        if (curr.right!=null)
-          tmp.add(curr.right); // add next level node
+    }
+    LinkedList<TreeNode> currlevel = new LinkedList<TreeNode>();
+    currlevel.add(root);
+    while(!currlevel.isEmpty()){
+      LinkedList<TreeNode> nextlevel = new LinkedList<TreeNode>();
+      ArrayList<Integer> vals = new ArrayList<Integer>();
+
+      for(TreeNode n : currlevel){
+        vals.add(n.val);
+        if(n.left!=null)
+          nextlevel.add(n.left);
+        if(n.right!=null)
+          nextlevel.add(n.right);
       }
-      res.add(nums);
-      r = tmp; // current level = next level
+      res.add(vals);
+      currlevel = nextlevel;
+
     }
     return res;
   }
@@ -73,35 +74,3 @@ public class Solution {
   }
 }
 
-
-// count the number of nodes in a level, time: O(n); space: O(b^d)
-public class Solution {
-  public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
-    ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
-    if (root == null)
-      return res;
-    Queue<TreeNode> qu = new LinkedList<TreeNode>();
-    qu.add(root);
-    int curr_num = 1, next_num = 0;
-    ArrayList<Integer> r = new ArrayList<Integer>();
-    while (!qu.isEmpty()){
-      TreeNode curr = qu.poll();
-      r.add(curr.val);
-      if (curr.left != null){
-        qu.add(curr.left);
-        next_num++;
-      }
-      if (curr.right != null){
-        qu.add(curr.right);
-        next_num++;
-      }
-      if (--curr_num == 0){
-        curr_num = next_num;
-        next_num = 0;
-        res.add(new ArrayList<Integer>(r));
-        r.clear();
-      }
-    }
-    return res;
-  }
-}

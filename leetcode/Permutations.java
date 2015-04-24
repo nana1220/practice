@@ -7,6 +7,30 @@
 
 // Note: no duplicates
 
+public class Solution {
+  public ArrayList<ArrayList<Integer>> permute(int[] num) {
+    ArrayList<Integer> list = new ArrayList<Integer>();
+    ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+    permute(num, list, res);
+    return res;
+  }
+
+  void permute(int[] num, ArrayList<Integer> list, ArrayList<ArrayList<Integer>> res){
+    if(list.size() == num.length) {
+      res.add(new ArrayList<Integer>(list));
+      return;
+    }
+    for (int i=0; i< num.length; i++){
+      if (!list.contains(num[i])) {
+        list.add(num[i]);
+        permute(num, list, res);
+        list.remove(list.size()-1);
+      }
+    }
+  }
+}
+
+
 // DFS
 // From the definition of permutation, in each position, we can have all the different values
 // time: O(n!)

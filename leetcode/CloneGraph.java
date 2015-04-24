@@ -30,46 +30,45 @@ Visually, the graph looks like the following:
  *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
  * };
  */
-public class CloneGraph {
 
   // use cache to reduce duplicate computation and avoid cycles
   // Maintain a map<oldNode, newNode>, if the oldNode is in the map, get newNode from the map
   // otherwise, create a new node
-
-  // DFS
+public class Solution {
   public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-    return clone(node, new HashMap<UndirectedGraphNode, UndirectedGraphNode>());
+    if(node==null) return null;
+    HashMap<UndirectedGraphNode,UndirectedGraphNode> map = new HashMap<UndirectedGraphNode,UndirectedGraphNode>();
+    return clone(node, map);
   }
-  public UndirectedGraphNode clone(UndirectedGraphNode node, HashMap<UndirectedGraphNode, UndirectedGraphNode> cache){
-    if (node == null) return null;
-    if (cache.containsKey(node)) return cache.get(node);
-    UndirectedGraphNode res = new UndirectedGraphNode(node.label);
-    cache.put(node, res);
-    if (node.neighbors == null || node.neighbors.size() == 0) return res;
-    for (UndirectedGraphNode n : node.neighbors)
-      res.neighbors.add(clone(n, cache));
-    return res;
-  }
-
-  // BFS
-  public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-    if (node==null) return null;
-    Queue<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
-    // use cache
-    Map<UndirectedGraphNode, UndirectedGraphNode> cache = new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
-    queue.add(node);
-    while (!queue.isEmpty()){
-      UndirectedGraphNode curr = queue.poll();
-      if (!cache.containsKey(curr))
-        cache.put(curr, new UndirectedGraphNode(curr.label)); // if not contain, create a new one, put in cache
-      for (UndirectedGraphNode adj : curr.neighbors){
-        if (!cache.containsKey(adj)){
-          cache.put(adj, new UndirectedGraphNode(adj.label));
-          queue.add(adj); // don't add to queue if contained in cache
-        }
-        cache.get(curr).neighbors.add(cache.get(adj)); // get from cache
-      }
+  UndirectedGraphNode clone(UndirectedGraphNode node, HashMap<UndirectedGraphNode,UndirectedGraphNode> map){
+    if(map.containsKey(node)) return map.get(node);
+    map.put(node, new UndirectedGraphNode(node.label));
+    for(UndirectedGraphNode aNode : node.neighbors){
+      UndirectedGraphNode copy = clone(aNode, map);
+      map.get(node).neighbors.add(copy);
     }
-    return cache.get(node);
+    return map.get(node);
   }
 }
+
+  // BFS, use HashMap to mark visited and map orig node to its clone node
+  public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+      if(node==null) return null;
+      LinkedList<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
+      Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
+      map.put(node, new UndirectedGraphNode(node.label));
+      queue.add(node);
+      while(!queue.isEmpty()){
+        UndirectedGraphNode orig = queue.pop();
+        for( UndirectedGraphNode aNode : orig.neighbors){
+          if(!map.containsKey(aNode)){
+            map.put(aNode, new UndirectedGraphNode(aNode.label));
+            queue.add(aNode);
+          }
+          map.get(orig).neighbors.add(map.get(aNode));
+        }
+      }
+      return map.get(node);
+    }
+  }

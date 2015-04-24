@@ -29,18 +29,20 @@ public class PathSum {
 
   void pathSum(TreeNode root, int sum, ArrayList<Integer> sums) {
     if (root.left == null && root.right == null)  {sums.add(sum + root.val); return;}
+    // the recursion condition is not hitting null, so traverse all nodes, no early pruning, the termination condition is traverse all nodes
     if (root.left != null) pathSum(root.left, sum + root.val, sums);
     if (root.right != null) pathSum(root.right, sum + root.val, sums);
   }
 
-  /*
-   * A very simple solution
-   */
+// Recursion
+// Note root-to-leaf path, the condition for a leaf node is 'node.left==null && node.right==null'
+// A node with only one null child is not a leaf node
+// time: O(n); space: recursive stack
   public boolean hasPathSum(TreeNode root, int sum) {
     if (root==null)  return false;
     sum -= root.val;
     if (root.left==null && root.right==null) return sum==0;
-    return hasPathSum(root.left, sum) || hasPathSum(root.right, sum);
+    return hasPathSum(root.left, sum) || hasPathSum(root.right, sum); // if find one true, recurse terminates, which is an early pruning
   }
 
   /* Definition for binary tree */

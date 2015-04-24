@@ -8,6 +8,37 @@
     Note: The sequence of integers will be represented as a string.
 */
 
+public class Solution {
+  public String countAndSay(int n) {
+    String res = "1";
+    while(n>1) {
+      res = nextValue(res);
+      n--;
+    }
+    return res;
+
+  }
+
+  String nextValue(String num) {
+    StringBuilder sb = new StringBuilder();
+    char[] c = num.toCharArray();
+    int count = 1;
+    for (int i=0; i < num.length(); ) {
+      int j = i+1;
+      while(j< num.length() && c[j] == c[i]){ // remember to check range of j first
+        count++;
+        j++;
+
+      }
+      sb.append(count);
+      sb.append(c[i]);
+      i=j;
+      count=1;
+    }
+    return sb.toString();
+  }
+}
+
 // Maintain a counter. Increment the counter if there's repeating characters,
 // otherwise, reset the counter to 1.
 // Each time, build the current string based on previous string

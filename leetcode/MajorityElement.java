@@ -5,6 +5,24 @@ appears more than ⌊ n/2 ⌋ times.
 You may assume that the array is non-empty and the majority element always exist in the array.
  */
 
+// O(n), linear scan
+public class Solution {
+  public int majorityElement(int[] nums) {
+    HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+    for (int i : nums){
+      Integer count = map.get(i);
+      if(count==null) map.put(i,1);
+      else map.put(i, count+1);
+    }
+    for(int key : map.keySet()){
+      if(map.get(key) > nums.length /2) return key;
+    }
+    return -1;
+  }
+}
+
+
+
 // sort the array first, which takes time of nlog(n). Then scan once to find the
 // longest consecutive substrings.
 

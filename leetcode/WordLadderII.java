@@ -17,6 +17,86 @@
     All words contain only lowercase alphabetic characters.
 */
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+
+// TLE, but algorithm is right
+public class Solution {
+  public ArrayList<ArrayList<String>> findLadders(String start, String end, Set<String> dict) {
+    ArrayList<ArrayList<String>> res = new ArrayList<ArrayList<String>>();
+    Set<String> visited = new HashSet<String>();
+    visited.add(start);
+    // use set as queue, because same level can visit same word multiple times, but only need to add it to the queue one time
+    HashSet<String> currentLevel = new HashSet<String>();
+    currentLevel.add(start);
+    // use set for path backtrack because one word can have multiple prev words on its transformation path
+    HashMap<String, HashSet<String>> backtrack = new HashMap<String, HashSet<String>>();
+    // can also check if queue of next level contains end to denote end has been found
+    boolean hasFound = false;
+    while(!currentLevel.isEmpty() && !hasFound){
+      HashSet<String> nextLevel = new HashSet<String>();
+      for(String w : currentLevel){
+        // NOTE!!!!!!!!!!!: add to set only after done processing the whole level, to allow same word being visited multiple times when processing this level
+        // add word of processed level to visited, different levels don't have same word, because deeper level has same word must have longer path
+        // same level can have same word multiple times, this word can be transformed from different words of prev level
+        visited.add(w);
+        Set<String> neighbours = getNeighbours(w, dict);
+        for(String n : neighbours){
+          if(!visited.contains(n)){ // next level don't visit words that have been visited on previous level
+            if(n.equals(end)) {
+              hasFound = true;
+            }
+            if (!backtrack.containsKey(n)){
+                HashSet<String> set = new HashSet<String>();
+                backtrack.put(n, set);
+            }
+            backtrack.get(n).add(w);
+            // note!!! DONT add word to visited here, different words at current level can transform to same word at next level
+            nextLevel.add(n);
+          }
+        }
+      }
+      currentLevel = nextLevel;
+    }
+    if(hasFound) {
+      buildPaths(new ArrayList<String>(), res, backtrack, start, end);
+    }
+    return res;
+  }
+  // DFS build paths
+  void buildPaths(ArrayList<String> path, ArrayList<ArrayList<String>> paths, HashMap<String, HashSet<String>> backtrack, String start, String end){
+    if(end.equals(start)){
+      path.add(end);
+      ArrayList<String> forwardPath = new ArrayList<String>(path);
+      Collections.reverse(forwardPath);
+      paths.add(forwardPath);
+      path.remove(path.size()-1);
+      return;
+    }
+    path.add(end);
+    for(String prev : backtrack.get(end)){
+      buildPaths(path, paths, backtrack, start, prev);
+    }
+    path.remove(path.size()-1);
+  }
+
+  Set<String> getNeighbours(String word, Set<String> dict){
+    Set<String> neighbours = new HashSet<String>();
+    for(int i =0; i<word.length(); i++){
+      for(int j=0; j<26; j++){
+        char c = (char) ('a' + j);
+        if (c != word.charAt(i)) {
+          String w =  word.substring(0,i) + c + word.substring(i+1);
+          if(dict.contains(w)) neighbours.add(w);
+        }
+      }
+    }
+    return neighbours;
+  }
+}
+
+
 // similar to print the shortest path between two nodes on a graph
 // BFS + map(store previous ndoes)
 public class Solution {
@@ -76,7 +156,7 @@ public class Solution {
   }
 }
 
-/*
+
 public class Solution {
     public ArrayList<ArrayList<String>> findLadders(String start, String end, HashSet<String> dict) {
         ArrayList<ArrayList<String>> res = new ArrayList<ArrayList<String>>();
@@ -124,7 +204,7 @@ public class Solution {
                             queue.offer(tmps);
                         }
                         else if (!tmps.equals(curs) && dict.contains(tmps)) {
-                            if (!queue.contains(tmps)) queue.offer(tmps);
+                            if (!queue.contains(tmps)) queue.offer(tmps); // don't add dup to the queue
                             map.get(tmps).add(curs);
                         }
                     }
@@ -158,4 +238,3 @@ public class Solution {
     }
 
 }
- */

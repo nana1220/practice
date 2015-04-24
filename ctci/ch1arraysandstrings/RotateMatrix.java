@@ -26,9 +26,9 @@ public class RotateMatrix {
 
   static void rotateMatrix(int[][] image, int N) { // 4 bytes pixel is a 32 bits int
     for (int i = 0; i < N / 2; i++) { // layer
-      int first = i;
-      int last = N - 1 - i;
-      for (int j = 0; j < last - first; j++) { // last - first - 1 elements are copied
+      int first = i; // left or top boarder
+      int last = N - 1 - i; // right or bottom boarder
+      for (int j = 0; j < last - first; j++) { // last - first  elements are copied for each board not last -first +1
         int temp = image[i][first + j]; // top: row defined by layer
         image[i][first + j] = image[last - j][i]; // left: column defined by layer
         image[last - j][i] = image[N - 1 - i][last - j]; // bottom: row defined by layer

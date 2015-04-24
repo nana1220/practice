@@ -31,7 +31,7 @@ public class MinimumWindowSubstring {
       else target.put(c, target.get(c) +1);
     }
     int start = 0;
-    int count = 0;
+    int count = 0; // NOTE!!!!!!!!!!: Use count == T.length() to check if all chars have been found
     String res = "";
     for (int end = 0; end < S.length(); end++) {
       char ch = S.charAt(end);
@@ -45,9 +45,10 @@ public class MinimumWindowSubstring {
           start++;
         }
         if (res.equals("") || end - start + 1 < res.length()) res = S.substring(start, end + 1);
-        found.put(S.charAt(start), found.get(S.charAt(start)) - 1); // remove the first character of the window
-        start++; // in order to find next valid window
-        count--; // first character must be valid, so count--
+        // following is useless, since when start char is found, its count become bigger than target count, start will then shift right
+//        found.put(S.charAt(start), found.get(S.charAt(start)) - 1); // remove the first character of the window
+//        start++; // in order to find next valid window
+//        count--; // first character must be valid, so count--
       }
     }
     return res;

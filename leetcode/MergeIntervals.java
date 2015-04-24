@@ -15,6 +15,33 @@
  * }
  */
 
+// not inplace
+// time: O(nlgn); space: O(n)
+public class Solution {
+  public List<Interval> merge(List<Interval> intervals) {
+    if (intervals.isEmpty()) return  new ArrayList<Interval>();
+    Comparator<Interval> comp = new Comparator<Interval>(){
+      public int compare(Interval i1, Interval i2){
+        return i1.start - i2.start;
+      }
+    };
+    Collections.sort(intervals, comp);
+    List<Interval> res = new ArrayList<Interval>();
+    int start = intervals.get(0).start; // need to check if intervals is empty
+    int end =intervals.get(0).end;
+    for(Interval in : intervals){
+      if(in.start > end){
+        res.add(new Interval(start, end));
+        start = in.start;
+        end = in.end;
+      } else{
+        end = Math.max(end, in.end); // NOTE: previous interval's end might be larger than current interval's end
+      }
+    }
+    res.add(new Interval(stafrt, end)); // NOTE: need to add last interval!!!!!!!!!!!
+    return res;
+  }
+}
 // Sort all the intervals according start value, and then merge and delete
 // time: O(nlgn); space: O(1) -- in place
 public class Solution {

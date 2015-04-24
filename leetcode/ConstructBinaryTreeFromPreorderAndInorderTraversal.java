@@ -15,6 +15,26 @@ You may assume that duplicates do not exist in the tree.
  * }
  */
 
+// can use three index identify the partition instead of copy array
+public class Solution {
+  public TreeNode buildTree(int[] preorder, int[] inorder) {
+    if(preorder.length==0 && inorder.length==0) return null;
+    int rootVal = preorder[0];
+    int i=0;
+    while(inorder[i]!=rootVal) i++; // find root index in inorder array since assume no dup value
+    int leftSize=i;
+    int[] preorderLeft = Arrays.copyOfRange(preorder, 1, 1+leftSize);
+    int[] preorderRight = Arrays.copyOfRange(preorder, 1+leftSize, preorder.length);
+    int[] inorderLeft = Arrays.copyOfRange(inorder, 0, leftSize);
+    int[] inorderRight = Arrays.copyOfRange(inorder,leftSize+1, inorder.length);
+    TreeNode root = new TreeNode(rootVal);
+    root.left = buildTree(preorderLeft, inorderLeft);
+    root.right=buildTree(preorderRight, inorderRight);
+    return root;
+  }
+}
+
+
 public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
   /*
           _______7______

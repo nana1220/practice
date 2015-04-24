@@ -24,15 +24,12 @@ where h is the height of the tree.
  */
 
 public class BSTIterator {
-  // use a stack storing the path to the left most leef
-  Stack<TreeNode> stack;
+  Stack<TreeNode> stack = new Stack<TreeNode>();
 
   public BSTIterator(TreeNode root) {
-
-    stack = new Stack<TreeNode>();
-    while (root != null) {
+    while(root!=null){
       stack.push(root);
-      root = root.left;
+      root=root.left;
     }
   }
 
@@ -43,16 +40,13 @@ public class BSTIterator {
 
   /** @return the next smallest number */
   public int next() {
-    TreeNode node = stack.pop();
-    int ret = node.val;
-    if (node.right != null) { // keep pushing the smallest node onto stack
-      node = node.right;
-      while (node != null) {
-        stack.push(node);
-        node = node.left;
-      }
+    TreeNode small = stack.pop();
+    int res = small.val;
+    small = small.right;
+    while(small!=null){
+      stack.push(small);
+      small=small.left;
     }
-    return ret;
+    return res;
   }
 }
-

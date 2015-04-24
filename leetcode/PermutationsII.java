@@ -5,34 +5,31 @@
   [1,1,2], [1,2,1], and [2,1,1].
 */
 
-// DFS, O(n!)
+// use a set store index instead of value
 public class Solution {
-  // NOTE: sort first, and mark visited
   public ArrayList<ArrayList<Integer>> permuteUnique(int[] num) {
     ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
-    if (num==null || num.length==0) return res;
-    Arrays.sort(num);   // Remember to sort here
-    // mark visited according to the index of number instead of the value of number
-    boolean[] visited = new boolean[num.length];
-    finder(num, 0, res, new ArrayList<Integer>(), visited);
+    ArrayList<Integer> list = new ArrayList<Integer>();
+    HashSet<Integer> idxSet = new HashSet<Integer>();
+    permute(num, list, res, idxSet);
     return res;
   }
 
-  public void finder(int[] num, int len, ArrayList<ArrayList<Integer>> res, ArrayList<Integer> r, boolean[] visited){
-    if (len == num.length){
-      res.add(new ArrayList<Integer>(r));
+  void permute(int[] num, ArrayList<Integer> list, ArrayList<ArrayList<Integer>> res, HashSet<Integer> idxSet){
+    if (list.size() == num.length){
+      res.add(new ArrayList<Integer>(list));
       return;
     }
-    Set<Integer> visited_val = new HashSet<Integer>(); // to avoid using duplicate values in one loop
-    for (int i=0; i<num.length; i++){
-      if (visited_val.contains(num[i]) || visited[i]) continue;
-      r.add(num[i]);
-      visited[i] = true;
-      visited_val.add(num[i]);
-      finder(num, len+1, res, r, visited);
-      // DONT' FORGET remove number and unset visited
-      r.remove(r.size()-1);
-      visited[i] = false;
+    HashSet<Integer> set = new HashSet<Integer>(); // to avoid using duplicate values in one loop
+    for(int i=0; i< num.length; i++){
+      if(!idxSet.contains(i) && !set.contains(num[i])){
+        idxSet.add(i);
+        list.add(num[i]);
+        set.add(num[i]);
+        permute(num, list, res, idxSet);
+        idxSet.remove(i); // remember to remove both value from list and index from set
+        list.remove(list.size()-1);
+      }
     }
   }
 }

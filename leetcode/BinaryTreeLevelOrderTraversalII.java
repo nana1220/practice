@@ -20,27 +20,28 @@ eturn its bottom-up level order traversal as:
 // time: O(n); space: O(b^d)
 public class Solution {
   public ArrayList<ArrayList<Integer>> levelOrderBottom(TreeNode root) {
-    ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
-    if (root==null)
+    ArrayList<ArrayList<Integer>> res = new  ArrayList<ArrayList<Integer>> ();
+    if(root==null){
       return res;
-    ArrayList<TreeNode> prev = new ArrayList<TreeNode>();
-    prev.add(root);
-    while (!prev.isEmpty()){
-      ArrayList<TreeNode> curr = new ArrayList<TreeNode>();
-      ArrayList<Integer> nums = new ArrayList<Integer>();
-      for (TreeNode node : prev){
-        nums.add(node.val);
-        if (node.left!=null)
-          curr.add(node.left);
-        if (node.right!=null)
-          curr.add(node.right);
+    }
+    LinkedList<TreeNode> currlevel = new LinkedList<TreeNode>();
+    currlevel.add(root);
+    while(!currlevel.isEmpty()){
+      LinkedList<TreeNode> nextlevel = new LinkedList<TreeNode>();
+      ArrayList<Integer> vals = new ArrayList<Integer>();
+
+      for(TreeNode n : currlevel){
+        vals.add(n.val);
+        if(n.left!=null)
+          nextlevel.add(n.left);
+        if(n.right!=null)
+          nextlevel.add(n.right);
       }
-      res.add(nums);
-      prev = curr;
+      res.add(vals);
+      currlevel = nextlevel;
+
     }
     Collections.reverse(res); // NOTE: simply use Collections.reverse
     return res;
   }
-
-
 }

@@ -50,6 +50,7 @@ public class Solution {
     long rem = (num % den) * 10; // zheshi ge weishu, fenshu chufa, meici yushu houmian jia ge 0 jiushi cheng 10
     if (rem == 0) return ans;
     //结果的小数部分
+    // store remainder and the position of the quotient obtained from remainder / denominator
     HashMap<Long, Integer> map = new HashMap<Long, Integer>();
     ans += ".";
     while (rem != 0) {
@@ -62,11 +63,63 @@ public class Solution {
         return ans;
       }
       //继续往下除
+      // note!!!!, use length denotes next index!!!!!!!!!!!!!!!, that is the index storing rem / den
       map.put(rem, ans.length()); // store posision of remainder in the result, zheshi xiaoshu hou yiwei
       res = rem / den;
       ans += String.valueOf(res);
       rem = (rem % den) * 10;
     }
     return ans;
+  }
+}
+
+
+// has bugs
+/*
+Input:	-1, -2147483648
+Output:	"0.000000000-4-6-5-6-6-1-2-8-7-30-7-7-3-9-2-5-7-8-1-2-5"
+Expected:	"0.0000000004656612873077392578125"
+ */
+public class Solution {
+  public String fractionToDecimal(int numerator, int denominator) {
+    StringBuilder res = new StringBuilder();
+    boolean sign = false;
+    if((numerator <0 && denominator >0) || (numerator>0 && denominator<0)) sign=true;
+    long numer = Math.abs(numerator);
+    long denom = Math.abs(denominator);
+    StringBuilder sb = new StringBuilder();
+    long num = numer / denom;
+    long remain = numer % denom;
+    if(remain==0) return "" + num;
+    sb.append(num);
+    sb.append(".");
+    HashMap<Long,Integer> visited = new HashMap<Long, Integer>(); // remainder and its quotient's position
+    visited.put(remain,0);
+    int pos =1;
+    while(remain!=0){
+      num = remain * 10;
+      remain = num % denom;
+      num /= denom;
+      sb.append((int)num);
+
+      if(visited.containsKey(remain)) break;
+      visited.put(remain, pos);
+      pos++;
+    }
+    if(remain==0) {
+      if(sign) return "-" + sb.toString();
+      else return sb.toString();
+    }
+    String[] s = sb.toString().split("\\.");
+    int idx = visited.get(remain);
+    if(sign) res.append("-");
+    res.append(s[0]);
+    res.append(".");
+    res.append(s[1].substring(0,idx));
+    res.append("(");
+    res.append(s[1].substring(idx));
+    res.append(")");
+    return res.toString();
+
   }
 }

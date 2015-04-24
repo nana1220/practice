@@ -18,6 +18,7 @@ c) Replace a character
 // Another string distance measurement is Hamming distance, only allows substitions
 
 // DP
+// edit word1 to transform word1 to word2
 // Let dp[i][j] stands for the edit distance between two strings with length i and j,
 // i.e., word1[0,...,i-1] and word2[0,...,j-1].
 // if x == y, then dp[i][j] == dp[i-1][j-1]
@@ -25,39 +26,48 @@ c) Replace a character
 // if x != y, and we delete x for word1, then dp[i][j] = dp[i-1][j] + 1
 // if x != y, and we replace x with y for word1, then dp[i][j] = dp[i-1][j-1] + 1
 // When x!=y, dp[i][j] is the min of the three situations.
+// Initial condition:
+// dp[i][0] = i, dp[0][j] = j
 
-
-// word1.substring(0, i) can be converted into word2.substring(0, j) using mem[i][j] steps
-// mem[i][j] = mem[i][j-1], denotes a insertion operation in word1.substring
-// mem[i][j] = mem[i-1][j], denotes an deletion operation in word1.substring
-// mem[i][j] = mem[i-1][j-1], denotes an replace operation in word1.substring
 // time: O(m*n); space: O(m*n)
 public class Solution {
   public int minDistance(String word1, String word2) {
-    if (word1==null || word2==null){
-      if (word1==null && word2==null) return 0;
-      return word1==null ? word2.length() : word1.length();
-    }
-    int M = word1.length(), N = word2.length();
-    int[][] dp = new int[M+1][N+1];
-    for (int i=1; i<=M; i++)
+    int len1 = word1.length();
+    int len2 = word2.length();
+
+    // len1+1, len2+1, because finally return dp[len1][len2]
+    int[][] dp = new int[len1 + 1][len2 + 1];
+
+    for (int i = 0; i <= len1; i++) {
       dp[i][0] = i;
-    for (int i=1; i<=N; i++)
-      dp[0][i] = i;
-    for (int i=1; i<=M; i++){
-      for (int j=1; j<=N; j++){
-        // if last two chars equal
-        if (word1.charAt(i-1)==word2.charAt(j-1))
-          dp[i][j] = dp[i-1][j-1];
-        else
-        /*
-         *      int replace = dp[i][j] + 1;
-				int insert = dp[i][j + 1] + 1;
-				int delete = dp[i + 1][j] + 1;
-         */
-          dp[i][j] = Math.min(Math.min(dp[i-1][j], dp[i][j-1]), dp[i-1][j-1])+1;
+    }
+
+    for (int j = 0; j <= len2; j++) {
+      dp[0][j] = j;
+    }
+
+    //iterate though, and check last char
+    for (int i = 0; i < len1; i++) {
+      char c1 = word1.charAt(i);
+      for (int j = 0; j < len2; j++) {
+        char c2 = word2.charAt(j);
+
+        //if last two chars equal
+        if (c1 == c2) {
+          //update dp value for +1 length
+          dp[i + 1][j + 1] = dp[i][j];
+        } else {
+          int replace = dp[i][j] + 1;
+          int insert = dp[i][j + 1] + 1;
+          int delete = dp[i + 1][j] + 1;
+
+          int min = replace > insert ? insert : replace;
+          min = delete > min ? min : delete;
+          dp[i + 1][j + 1] = min;
+        }
       }
     }
-    return dp[M][N];
+
+    return dp[len1][len2];
   }
 }
