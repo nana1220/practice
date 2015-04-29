@@ -23,14 +23,22 @@ For example, a 3-byte rune would be 1110XXXX 10XXXXXX 10XXXXXX.
 Write a function that decides whether a given byte array (or string) is valid UTF-8 encoded text.
  */
 
+
+
 class UTF8 {
-  boolean check(byte[] input) {
-    // state = 1, expecting the start of a new encoding character encoding
-    // state = 1, read 0XXX, state = 1
-    // state = 1, read 10XX return false
-    // state = 1, read 111...0XX set state to 2 to 8
-    // state = 2 to 8, read 10XX.  state--
-    // shift left until reach 0, to count how many lead ones
-    int state = 1;
+  bool valid_utf8(const vector<unsigned char>& data) {
+    int size = 0;
+    for(auto c : data) {
+      if(size == 0) {
+        if((c >> 5) == 0b110) size = 1;
+        else if((c >> 4) == 0b1110) size = 2;
+        else if((c >> 3) == 0b11110) size = 3;
+        else if(c >> 7) return false;
+      } else {
+        if((c >> 6) != 0b10) return false;
+        --size;
+      }
+    }
+    return size == 0;
   }
 }

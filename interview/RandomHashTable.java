@@ -33,3 +33,11 @@ public class HashTable {
     return items.get(key);
   }
 }
+
+/*
+我们需要一个vector和一个hash table。vector存实际的数据，hash table存每个value对应在数组里面的index。
+add操作要把新插进去的value的id保存到hash table里。
+remove操作首先根据给的value在hash中查出所在id，然后把数组最后一个元素move到要删除的这个元素所在的位置。然后更新index和size。
+random返回只需要一个简单的rand() % size就好。
+注意这个solution是无法处理重复元素的。
+ */

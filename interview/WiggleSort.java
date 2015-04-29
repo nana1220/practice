@@ -56,4 +56,25 @@ public class SmallBigSmallBigArray {
     }
     return arr;
   }
+
+
+
+  // Sort the array in ascending order, and then merge left and right half to
+  // form the target array
+  // time: O(nlgn); space: O(1)
+  public int[] sortArraysInMagicOrder(int[] A){
+    Arrays.sort(A);
+    int N = A.length;
+    int[] res = new int[N];
+    int end = N-1, mid = (N-1)/2;
+    int i= 0, j = mid+1, r = 0;
+    while (i<=mid && j<=end){
+      res[r++] = A[i++];
+      res[r++] = A[j++];
+    }
+    if (i<=mid) // if odd length, need to add the middle element
+      res[r++] = A[i++];
+    return res;
+  }
+
 }

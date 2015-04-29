@@ -1,6 +1,6 @@
 /*
 find the longest increasing sequence in an integer matrix in 4 directions (up down left right),
-return the sequence; for example: input:. visit 1point3acres.com for more.
+return the sequence; for example: input:
 Ex: input: consider 4x4 grid
 2 3 4 5
 4 5 10 11
@@ -9,6 +9,47 @@ Ex: input: consider 4x4 grid
 
 output : 4 5 6 7 8 9 10 11 12
  */
+
+class Solu {
+  vector<int> longest_inc(const vector<vector<int>>& mat) {
+    if(mat.empty() || mat[0].empty()) return {};
+    int m = (int)mat.size(), n = (int)mat[0].size();
+
+    vector<vector<int>> mem(m, vector<int>(n,0));
+
+    function<int(int,int)> dfs = [&](int i, int j) {
+      if(mem[i][j] != 0) return mem[i][j];
+
+      vector<pair<int,int>> dirs = {{-1,0},{1,0},{0,-1},{0,1}};
+      for(auto& d : dirs) {
+        int newi = i + d.first, newj = j + d.second;
+        if(newi < 0 || newj < 0 || newi >= m || newj >= n) continue;
+        if(mat[newi][newj] == mat[i][j] + 1)
+          mem[i][j] = max(mem[i][j], dfs(newi, newj));
+      }
+      return ++mem[i][j];
+    };
+    int max_start = 0, max_path = 0;
+    for (int i = 0; i < m; i++)
+      for(int j = 0; j < n; j++) {
+        int path = dfs(i,j);
+        if(path > max_path) {
+          max_start = mat[i][j];
+          max_path = path;
+        }
+      }
+    /*
+    Since you've got the 'start' and 'length', it's easy to just return a increasing sequence.
+For example, the start is 2, length is 3, then we return [2,3,4].
+Be aware in this question increasing means one step.
+     */
+    vector<int> ret(max_path);
+    iota(ret.begin(), ret.end(), max_start);
+    return ret;
+  }
+}
+
+
 class Solution1{
   /*
    find the longest length for every point, and record the result in a 2D

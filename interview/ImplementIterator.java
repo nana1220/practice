@@ -51,7 +51,7 @@ public class ImplementIterator {
         return ret;
       }
 
-      /**
+      /*
        * Removes from the underlying collection the last element returned by this iterator.
        * This method can be called only once per call to next(). The behavior of an iterator
        * is unspecified if the underlying collection is modified while the iteration is in

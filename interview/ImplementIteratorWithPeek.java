@@ -8,6 +8,8 @@
  * }
  */
 
+// PeekIterator可以用普通iterator的get_next()来获得，但是要记录下来，下一次调用get_next的时候直接返回上一次peek的即可。
+
 import java.lang.Exception;
 import java.util.Iterator;
 
