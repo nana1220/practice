@@ -109,3 +109,60 @@ class SOlu{
     return ret;
   }
 }
+
+public class TopologicalSort<T> {
+  public Deque<Vertex<T>> topSort(Graph<T> graph) {
+    Deque<Vertex<T>> stack = new ArrayDeque<Vertex<T>>();
+    Map<Vertex<T>, Boolean> visited = new HashMap<Vertex<T>, Boolean>();
+    for (Vertex<T> vertex : graph.getAllVertex()) {
+      if (visited.containsKey(vertex)) {
+        continue;
+      }
+      topSortUtil(vertex, stack, visited);
+    }
+    return stack;
+  }
+
+  private void topSortUtil(Vertex<T> vertex, Deque<Vertex<T>> stack,
+                           Map<Vertex<T>, Boolean> visited) {
+    visited.put(vertex, true);
+    for (Vertex<T> childVertex : vertex.getAdjacentVertexes()) {
+      if (visited.containsKey(childVertex)) {
+        continue;
+      }
+      topSortUtil(childVertex, stack, visited);
+    }
+    stack.offerFirst(vertex);
+  }
+}
+
+  class solu{
+  public class TopologicalSort {
+
+    public static ArrayList<Integer> topologicalSort(HashMap<Integer, Set<Integer>> Graph) {
+      ArrayList<Integer> sorted = new ArrayList<Integer>();
+      Queue<Integer> degreeZero = new LinkedList<Integer>();
+
+      while (!Graph.isEmpty()) {
+        for (int key : Graph.keySet()) {
+          if (Graph.get(key).isEmpty())
+            degreeZero.add(key);
+        }
+
+        for (int key : degreeZero)
+          Graph.remove(key);
+
+        while (!degreeZero.isEmpty()) {
+          int node = degreeZero.poll();
+          sorted.add(node);
+          for (int key : Graph.keySet()) {
+            if (Graph.get(key).contains(node))
+              Graph.get(key).remove(node);
+          }
+        }
+      }
+
+      return sorted;
+    }
+  }
+}

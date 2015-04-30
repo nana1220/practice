@@ -78,3 +78,40 @@ public class Solution {
     flatten(right);
   }
 }
+
+class solu{
+  public void flatten(TreeNode root) {
+    root = flatten(root, null);
+  }
+
+  TreeNode flatten(TreeNode cur, TreeNode next){
+    if (cur == null) return next;
+    next = flatten(cur.right, next);
+    next = flatten(cur.left, next);
+    cur.right = next;
+    cur.left = null;
+    return cur;
+  }
+
+  /*
+   * Iterative version
+   */
+  public void flatten(TreeNode root){
+    if (root == null) return;
+    TreeNode prev = null, cur = root;
+    Stack<TreeNode> stack = new Stack<TreeNode>();
+    stack.push(cur);
+    while (!stack.isEmpty()){
+      cur = stack.pop();
+      if (cur.right != null)
+        stack.push(cur.right);
+      if (cur.left != null)
+        stack.push(cur.left);
+      if (prev != null){
+        prev.right = cur;
+        prev.left = null;
+      }
+      prev = cur;
+    }
+  }
+}
