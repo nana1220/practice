@@ -25,7 +25,7 @@ class Solu{
     }
     n += 9 * pow(10, k - 1) * k;
     if( n % k == 0) {
-      int finalNumber = pow(10, k - 1) + (n / k) - 1;
+      int finalNumber = pow(10, k - 1) + (n -1)/k;
       return finalNumber % 10;
     } else {
       int finalNumber = pow(10, k - 1) + (n / k);
@@ -35,7 +35,7 @@ class Solu{
 }
 
 class SOlu{
-  int get_digit_num(int num, int dig) {
+  int get_digit_num(int num, int dig) { // get dig-th digit in number num
     while(--dig > 0) num /= 10;
     return num % 10;
   }

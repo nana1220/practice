@@ -7,6 +7,11 @@ Write a program to find and print the 150’th ugly number.
 
 class Solu{
   unsigned get_ugly_num(unsigned n) {
+    // instead of use three indexes
+    // can maintian three queue, each time get a ugly number from the minimum of head of three queues,
+    // and put 2*number, 3*number, 5*number to three queues
+
+    // can use one minheap to hold 2*number, 3*number, 5*number
     unsigned i2 = 0, i3 = 0, i5 = 0;
     unsigned next_mul2 = 2, next_mul3 = 3, next_mul5 = 5;
 

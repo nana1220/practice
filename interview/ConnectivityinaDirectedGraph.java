@@ -16,12 +16,12 @@ Naive的方法是，对每一个节点做一次DFS，如果存在一个节点在
 /*
 用Kosaraju算法，两个pass做DFS：
 
-开一个visited数组，标记所有点为unvisited.
-从任意顶点V走一次DFS，如果没有访问到所有顶点则返回false。
-将所有边reverse。
+1 开一个visited数组，标记所有点为unvisited.
+2 从任意顶点V走一次DFS，如果没有访问到所有顶点则返回false。
+3 将所有边reverse。, use clone graph to reverse edge, HasmMap<origNode, reverseNode>;
 把reverse后的图的所有定点重新标记为unvisited。
-继续对新图走一次DFS，起点跟2中的顶点V。如果DFS没有访问到所有点则返回false，否则返回true。
-算法的整体思路是，如果一个点可以访问到其他所有点，同时其他所有点可以访问到这个点，那么这个图就是强连通图。时间复杂度为O(V+E)
+4 继续对新图走一次DFS，起点跟2中的顶点V。如果DFS没有访问到所有点则返回false，否则返回true。
+5 算法的整体思路是，如果一个点可以访问到其他所有点，同时其他所有点可以访问到这个点，那么这个图就是强连通图。时间复杂度为O(V+E)
  */
 
 class solu{

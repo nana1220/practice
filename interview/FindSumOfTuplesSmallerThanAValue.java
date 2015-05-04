@@ -68,7 +68,7 @@ class solution {
 38:      return result;
 39:    }
 （1）先排序
-（2）扫一遍数组，用hash来记录当前的数是第几个数。
+（2）扫一遍数组，用hash来记录当前的数是第几个数。, can build a table dp[i][j] denote number of distinct values in  [i,j]
 比如 [1,2,3,3,5,5,5,10] => H[1] = 1,H[2] = 2,H[3] = 3,H[5] = 4,H[10] = 5
 int prev = arr[0]; map.put(prev, 1); int pos = 2;
 for( int i = 1; i < arr.length; i++) {

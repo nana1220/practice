@@ -36,9 +36,9 @@ public class MaxValueSlidingWindow {
   void maxSlidingWindow(int A[], int n, int k, int B[]) {
     deque<int> Q;
     for (int i = 0; i < k; i++) { // fill window
-      while (!Q.empty() && A[i] >= A[Q.back()])
-        Q.pop_back();
-      Q.push_back(i);
+      while (!Q.empty() && A[i] >= A[Q.back()]) // peekLast, notice >=, also replace equal to get most recent value
+        Q.pop_back(); // pollLast
+      Q.push_back(i); // add
     }
     for (int i = k; i < n; i++) { // move window
       B[i - k] = A[Q.front()]; // peek(), take max value
@@ -48,6 +48,6 @@ public class MaxValueSlidingWindow {
         Q.pop_front(); // poll() if front's index shows that front should be removed from window,
       Q.push_back(i); // add() current value to the end of queue
     }
-    B[n - k] = A[Q.front()];
+    B[n - k] = A[Q.front()]; // remember to add the last window
   }
 }

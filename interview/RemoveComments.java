@@ -39,13 +39,13 @@ class SOlu{
         }
       } else if(str[id] == '/' && str[id+1] == '/') {
         if(last_head == -1) {
-          auto rtn = str.find('\n', id);
-          if(rtn == string::npos) {
-            removes.push_back({id, str.length()-1});
-          } else {
+          auto rtn = str.find('\n', id); // indexOf('\n', id)
+          if(rtn == string::npos) { // -1, no endline
+            removes.push_back({id, str.length()-1}); // remove all rest string
+          } else {// find endline
             removes.push_back({id, rtn-1}); // note don't remove '\n'
           }
-          id = removes.back().second + 1;
+          id = removes.back().second + 1; // NOTICE the id update here
         } else { // if find "//" after a efective "/*", ignore "//"
           id+=2;
         }

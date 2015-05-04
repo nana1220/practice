@@ -1,3 +1,51 @@
+/*
+we have a random list of people. each person knows his own height and the number of tall people in front of him. write a code to make the equivalent queue.
+for example :
+input: <"Height","NumberOfTall","Name">,
+<6,2,"A">,<1,4,"B">,<11,0,"C">,<5,1,"D">,<10,0,"E">,<4,0,"F">
+output: "F","E","D","C","B","A" --> end of queue
+
+
+ */
+
+
+class solu{
+//  1.Sort by "NumberOfTall" and "height":
+//   (1)those who have fewer people taller in front of them have smaller index;
+//  (2)for those having same number of tallers in front, the taller his own height is, the larger index he has.
+
+  struct Person{
+    string name;
+    int height;
+    int frontTaller;
+  };
+  struct Compare{
+    bool operator()(const Person& a, const Person& b){
+      if(a.frontTaller != b.frontTaller) return a.frontTaller < b.frontTaller;
+      else return a.height < b.height;
+    }
+  };
+//  2.Insert each person into the queue after counting his "NumberOfTaller":
+
+  list<Person> retrieveQueue(vector<Person>& v)
+  {
+    sort(v.begin(), v.end(), Compare());
+    list<Person> q;
+    list<Person>::iterator iter;
+    for(int i = 0; i < v.size(); ++i){
+      iter = q.begin();
+      for(int n = v[i].frontTaller; n > 0; ++iter){ // while(cout>0){}
+        if(iter->height > v[i].height) --n;
+      }
+      q.insert(iter, v[i]);
+    }
+    return q;
+  }
+}
+
+
+
+
 import java.util.Arrays;
 import java.util.Comparator;
 

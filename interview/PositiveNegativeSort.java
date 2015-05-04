@@ -24,6 +24,7 @@ Similarly, B1 denotes the negative part of B, and B2 denotes positive part of B.
 Thus the array AB (i.e., A1A2B1B2) becomes A1A2’B1’B2.
 2.2.	Compute the inverse of A2’B1’ (i.e., B1A2) in \theta(|A2|) time. [See observation; the total time is \theta(n) and space is O(1)]
 Thus the array A1A2’B1’B2 becomes A1B1A2B2. We are done.
+mergesort also return mid pointer, for easy locate last minues element
 
 Time complexity analysis:
 T(n) = 2T(n/2) + \theta(n) = O(nlogn)

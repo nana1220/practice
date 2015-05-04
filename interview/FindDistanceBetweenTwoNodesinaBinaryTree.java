@@ -22,7 +22,7 @@ class Solu{
     auto left = get_lca(root->left, n0, n1, cur+1);
     auto right = get_lca(root->right, n0, n1, cur+1);
     if(left && right) {
-      ret = n0_len + n1_len - 2 * cur;
+      ret = n0_len + n1_len - 2 * cur;// remember to -2*cur
       return root;
     }
     return left ? left : right;
@@ -36,7 +36,7 @@ class Solu{
     auto lca = get_lca(root, n0, n1, 0);
 
     if (n0_len != -1 && n1_len != -1) return ret;
-    else if(n0_len != -1) return height(lca, n1, 0);
+    else if(n0_len != -1) return height(lca, n1, 0);// use return of lsa
     else if(n1_len != -1) return height(lca, n0, 0);
     else return -1;
   }

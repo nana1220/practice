@@ -5,7 +5,19 @@ Determine the maximum value obtainable by cutting up the rod and selling the pie
  */
 public class CuttingRod {
 
+
+
   public int maxValue(int price[]){
+    int max[] = new int[price.length+1];
+    for(int i=1 ; i <= price.length; i++){ // i is length
+      for(int j=0; j < i ; j++){
+        max[i] = Math.max(max[i], max[i-j] + price[j]); // j=0 means no cut, j=1 means cut length1,
+      }
+    }
+    return max[price.length];
+  }
+
+  public int maxValue1(int price[]){
     int max[] = new int[price.length+1];
     for(int i=1; i <= price.length; i++){
       for(int j=i; j <= price.length; j++){
@@ -15,18 +27,6 @@ public class CuttingRod {
     return max[price.length];
   }
 
-  public int maxValue1(int price[]){
-    int max[] = new int[price.length+1];
-    for(int i=1; i <= price.length; i++){
-      max[i] = price[i-1];
-    }
-    for(int i=1 ; i <= price.length; i++){
-      for(int j=1; j < i ; j++){
-        max[i] = Math.max(max[i], max[i-j] + max[j]);
-      }
-    }
-    return max[price.length];
-  }
 
   public int recursiveMaxValue(int price[],int len){
     if(len <= 0){

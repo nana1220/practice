@@ -2,12 +2,14 @@
 一个球从起点开始沿着通道，看能不能滚到终点。不过有限制， 每次球一走到底要不到边界，要不到障碍物，中间不能停留。 可以上下左右走，
 然后让写个function 给定起点， 终点，和图，判断是不是solvable.
 For example (1代表有障碍, 0代表可以通过):
-⎡⎣⎢begin1100001011end⎤⎦⎥
+⎡⎣⎢begin   0  0  1
+   1       0  1   1
+   1        0  0   end
 return false
 
-
-
-⎡⎣⎢begin1100000011end⎤⎦⎥
+begin 0  0  1
+1     0  0   1
+1    0   0   end
 return true
  */
 
@@ -22,7 +24,7 @@ class Solu{
     vector<vector<bool>> visited(m, vector<bool>(n, false));
     visited[start.first][start.second] = true;
 
-    auto get_next = [&](int row, int col) {
+    auto get_next = [&](int row, int col) { // find next possible points at four directions, and the points are either before obstalces or before edges
       vector<pair<int,int>> next;
       bool found = false;
       for(int i = row + 1; i <= m; ++i)

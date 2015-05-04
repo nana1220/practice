@@ -40,3 +40,41 @@ class Solu{
     return ret;
   }
 }
+
+
+// https://hellosmallworld123.wordpress.com/2014/06/10/kmp-related/
+class solu{
+// S = “ABABAB” would be F = {0001234}
+  public int [] failure(String s) {
+    int [] f = new int[s.length() + 1];
+    f[0] = f[1] = 0;
+    int j = 0; // record  the last possible position to extend
+    for(int i = 1; i < f.length - 1; i++) {
+      if (s.charAt(i-1) == s.charAt(k)) {
+        f[i+1] = k+1;
+        k++;
+      }
+      else if (k != 0) {
+        k = f[k];
+        i--; // try next k with same i
+      }
+      else {
+        f[i+1] = 0;
+      }
+    }
+    return f;
+  }
+
+  public static String minConcat(String s) {
+    int [] f = failure(s);
+    int n = f[s.length()];
+    String concast = s;
+    while(n != 0) {
+      if (n%(s.length() - n) == 0) { //n should be greater thatn s.length() - n if not, the statement will not be 0.
+        concast = s.substring(0, s.length() - n);
+      }
+      n = f[n];
+    }
+    return concast;
+  }
+}

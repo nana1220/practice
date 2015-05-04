@@ -24,7 +24,7 @@ class Solu{
 
     // L[m][n] contains length of LCS for X[0..n-1] and Y[0..m-1]
     return L[m][n];
-    // to restore the LCS, in dp table go from dp[m][n] to the area with dp value 0,
+    // use dfs to restore the LCS, in dp table go from dp[m][n] to the area with dp value 0,
     // can either go up and left, or go left, whenever find x[i]=y[j], store the letter and jump to x[i-1]y[j-1]
   }
 }

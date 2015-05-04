@@ -20,8 +20,8 @@ class Solu{
       for(int j=0;j<=MAXTARGET;j++){
         dp[i][j] = -1;
         if (dp[i-1][j] < 0) continue;
-        for (int k = max(j-target, 0); k<=min(MAXTARGET, j+target); ++k) {
-          dp[i][k] = min(dp[i][k], dp[i-1][j] + abs(A[i]- k));
+        for (int k = max(j-target, 0); k<=min(MAXTARGET, j+target); ++k) { // note max(,0), and min(MAXTARGET)
+          dp[i][j] = min(dp[i][j], dp[i-1][k] + abs(A[i]- j));
         }
       }
     }

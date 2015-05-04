@@ -34,7 +34,7 @@ public class MergeQuardTrees {
     if (q1.val==2 || q2.val==2){  // one grey will result in grey
       QTreeNode ret = new QTreeNode(2);
       for (int i=0; i<4; i++)
-        ret.children.add(merge(q1.children.get(i), q2.children.get(i)));
+        ret.children.add(merge(q1.children.get(i), q2.children.get(i))); // in fact, only grey will have children
       return ret;
     }
     // only left black or white

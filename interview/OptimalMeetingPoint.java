@@ -56,6 +56,8 @@ public class OptimalMeetingPoint {
         cost[0] += X[i] * i;
     }
     for (int i = 1; i < N; i++)
+      // cost[i-1] + prefixSum[i] - suffixSum[i-1],
+    // leftside of i need to move one more step from i-1, right side of i-1 can save one step to just get i instead of i-1
       cost[i] = cost[i - 1] + prefixSum[i] - suffixSum[i] - X[i];
     int minIndex = 0;
     for (int i = 0; i < N; i++) {

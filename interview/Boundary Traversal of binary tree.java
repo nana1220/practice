@@ -83,7 +83,7 @@ class Solu{
       // Print the left boundary in top-down manner.
       printBoundaryLeft(root->left);
 
-      // Print all leaf nodes
+      // Print all leaf nodes, if root is the only node, call on root will print root again
       printLeaves(root->left);
       printLeaves(root->right);
 

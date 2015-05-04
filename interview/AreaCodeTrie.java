@@ -48,7 +48,7 @@ public class AreaCodeTrie {
       NumberNode curr = root;
       for (int i = 0; i < number.length(); i++) {
         int idx = number.charAt(i) - '0';
-        if (curr.children[idx] == null) return null;
+        if (curr.children[idx] == null) return null; // remember to check null, i.e. consider the case when country doesn't existugli
         curr = curr.children[idx];
       }
       return curr.country;

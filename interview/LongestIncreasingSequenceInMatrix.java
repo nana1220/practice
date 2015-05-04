@@ -15,7 +15,7 @@ class Solu {
     if(mat.empty() || mat[0].empty()) return {};
     int m = (int)mat.size(), n = (int)mat[0].size();
 
-    vector<vector<int>> mem(m, vector<int>(n,0));
+    vector<vector<int>> mem(m, vector<int>(n,0));// initialized to zeros
 
     function<int(int,int)> dfs = [&](int i, int j) {
       if(mem[i][j] != 0) return mem[i][j];
@@ -27,7 +27,7 @@ class Solu {
         if(mat[newi][newj] == mat[i][j] + 1)
           mem[i][j] = max(mem[i][j], dfs(newi, newj));
       }
-      return ++mem[i][j];
+      return ++mem[i][j]; // plus 1 anyway, so if zero, zero will become 1
     };
     int max_start = 0, max_path = 0;
     for (int i = 0; i < m; i++)
@@ -47,47 +47,6 @@ Be aware in this question increasing means one step.
     iota(ret.begin(), ret.end(), max_start);
     return ret;
   }
-}
-
-
-class Solution1{
-  /*
-   find the longest length for every point, and record the result in a 2D
-   array so that we do not need to calculate the longest length for some points again.
-   */
-  int original[m][n] = {...};
-  int longest[m][n] = {0};
-
-  int find() {
-    int max = 0;
-    for (int i = 0; i < m; i++) {
-      for (int j = 0; j < n; j++) {
-        int current = findfor(i, j);
-        if (current > max) { max = current; }
-      }
-    }
-    return max;
-  }
-
-  int findfor(int i, int j) {
-    if (longest[i][j] == 0) {
-      int max = 0;
-      for (int k = -1; k <= 1; k++) {
-        for (int l = -1; l <= 1; l++) {
-          if (!(k == 0 && l == 0) &&
-              i + k >= 0 && i + k < m &&
-              j + l >= 0 && j + l < n &&
-              original[i + k][j + l] > original[i][j]
-              )
-            int current = findfor(i + k, j + l); // surrending four cells
-          if (current > max) { max = current; }
-        }
-      }
-    }
-    longest[i][j] = max + 1;
-  }
-  return longest[i][j];
-}
 }
 
 

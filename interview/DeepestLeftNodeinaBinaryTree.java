@@ -11,6 +11,22 @@ For example:
 should return 6.
  */
 
+class solu{
+  Node res;
+  int maxDep=0;
+  void dfs(NOde curr, Node parent, int dep){
+    if(curr==null) return;
+    if(curr.left==null && curr.right==null){
+      if(parent.right == curr && dep>maxDep) res = curr;
+    }
+    dfs(curr.left);
+    dfs(curr.right);
+  }
+
+}
+
+
+
 // pass level parameter to dfs, if level is current max level, store its right child
 class Solu{
   int deepest_left_node(TreeNode* root) {
@@ -19,7 +35,7 @@ class Solu{
     function<void(TreeNode*, int)> dfs = [&](TreeNode* r, int level) {
       if(!r) return;
 
-      if(level > max_level && r.right!= null) {
+      if(level > max_level && r.right!= null) {// record right child at every level
         max_level = level;
         ret = r->val;
       }

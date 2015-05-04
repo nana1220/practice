@@ -15,6 +15,8 @@ e.g. dgg cat naioe lot.
  */
 
 class Solu{
+
+
   string search_longest(const string& str) {
     string ret;
     bool count[256] = {false};
@@ -34,4 +36,53 @@ class Solu{
     search("", _root);
     return ret;
   }
+
+  class Trie {
+    public:
+    struct Node {
+      Node(char val): value{val}{}
+      ~Node() {
+        for(int i = 0; i < 27; ++i) {
+          if (children[i]) {
+            delete children[i];
+            children[i] = nullptr;
+          }
+        }
+      }
+      Node* get(char c, bool auto_create = true) {
+        assert((c >= 'a' && c <= 'z') || c == '\0');
+        int id = c == '\0' ? 26 : c - 'a';
+        if (!children[id] && auto_create) {
+          children[id] = new Node(c);
+          children[id]->parent = this;
+          num_children++;
+        }
+        return children[id];
+      }
+      bool end() {
+        return get('\0',false);
+      }
+      int num_children { 0 };
+      char value{ 0 };
+      Node* parent{ nullptr };
+      Node* children[27] { nullptr };
+    };
+    public:
+    Trie() {
+      _root = new Node(-1);
+    }
+    ~Trie() {
+      if (_root) {
+        delete _root;
+        _root = nullptr;
+      }
+    }
+    void add_string(const string& str) {
+      auto node = _root;
+      for (auto c : str) {
+        node = node->get(c);
+      }
+      node->get('\0');
+    }
+
 }

@@ -24,7 +24,7 @@ public class GetDecimalZipOfTwoIntegers {
   }
 
   private int getLength(int N) {
-    if (N == 0)
+    if (N == 0) // note edge case
       return 1;
     int len = 0;
     while (N > 0) {

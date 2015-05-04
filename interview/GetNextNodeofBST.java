@@ -1,17 +1,12 @@
 class Solu{
   // get next node whose val is bigger than val
-  TreeNode* get_next(TreeNode* root, int val) {
-    if(!root) return nullptr;
-
-    TreeNode *cur = root, *prev = nullptr;
-    while(cur) {
-      if(val < cur->val) {
-        prev = cur;
-        cur = cur->left;
-      } else {
-        cur = cur->right;
-      }
-    }
-    return prev;
+  Node greater=null;
+  Node cur=root;
+  while(cur!=null) {
+    if(cur.val<=target) { cur=cur.right; }
+    else { greater=cur; cur=cur.left; }
   }
+  if (greater==null) // no result
+      else return greater.val;
+
 }

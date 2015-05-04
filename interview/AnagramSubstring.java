@@ -30,7 +30,7 @@ public class AnagramSubstring {
       if (find[val] > need[val]) {
         while (j <= i && b.charAt(j) != b.charAt(i)) {
           find[(int) b.charAt(j++)]--;
-          M++;
+          M++; // all char in sliding window is effective, so each time move start pointer, count++
         }
         find[val]--;
         j++;

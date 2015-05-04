@@ -3,7 +3,7 @@ public class RunLengthEncoding {
     * Given an input string, write a function that returns the Run Length Encoded string for the
     * input string. Assume there's only alphabetic characters in the given string.
     */
-
+//For example, if the input string is “wwwwaaadexxxxxx”, then the function should return “w4a3d1e1x6″.
   // http://www.geeksforgeeks.org/run-length-encoding/
 
   // Maintain a counter
