@@ -33,7 +33,7 @@ class Solu{
   public TreeNode deserialize(String s){
     if (s == null || s.length() == 0) return null;
     // StringTokenizer is a legacy class t
-    // prefer to use String[] s = s.split("\\s"); ArrayList<String> slist = new ArrayList<String>(Arrays.asList(s));
+    // prefer to use String[] s = s.split("\\s"); Arrays.asList(s).iterator();
     StringTokenizer st = new StringTokenizer(s, " ");
     // as pass slist.iterator();
     return deserialize(st);

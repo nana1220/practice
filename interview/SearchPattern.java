@@ -11,8 +11,8 @@ class SOlu{
 
     function<void(int,int,string,Node*)> search = [&](int id, int num, string cur, Node* node){
       if(!node) return;
-      if (id > str.length()) {
-        if (node->value == '\0') {
+      if (id > str.length()) { // goes to the end of str, store result
+        if (node->value == '\0') { // if current node corresponds to a word in dict
           cur.resize(cur.length() - 1);
           ret.push_back(cur);
         }
@@ -28,13 +28,15 @@ class SOlu{
         if (c >= '0' && c <= '9') {
           int over_id = id + 1;
           for(; over_id < str.length() && str[over_id] >= '0' && str[over_id] <= '9'; ++over_id);
-          int cur_num = atoi(str.substr(id, over_id - id).c_str()) - 1;
+          int cur_num = atoi(str.substr(id, over_id - id).c_str());
 
           for(int i = 0; i < 26; ++i) {
+            // if read a number, no change for index, search all children until number counts to zero
             if (node->children[i])
-              search(over_id, cur_num, cur + node->children[i]->value, node->children[i]);
+              search(over_id, cur_num-1, cur + node->children[i]->value, node->children[i]);
           }
         } else {
+          // if read a char, index+1, search the corresponding child
           search(id+1, 0, cur + c, node->get(str[id], false));
         }
       }

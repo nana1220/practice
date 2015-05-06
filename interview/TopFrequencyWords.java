@@ -35,6 +35,7 @@ class MyTopN implements TopN {
         res = new Node(query, 1);
         words.put(query, res);
         tail.next = res;
+        res.prev=tail;
         tail = res;
       } else {
         res.freq++;
@@ -58,13 +59,13 @@ class MyTopN implements TopN {
         Node pre = curr.prev;
         Node ne = curr.next;
         pre.next = ne;
-        ne.prev = pre;
+        ne.prev = pre; // if(ne!=null)
         curr.next = pre;
-        pre.prev = curr;
         if (pre.prev != null) {
           pre.prev.next = curr;
           curr.prev = pre.prev;
         }
+        pre.prev = curr;
       }
     }
   }

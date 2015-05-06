@@ -56,7 +56,7 @@ public class Solution {
   private TreeNode dfsBottomUp(TreeNode p, TreeNode parent) {
     if (p == null) return parent;
     TreeNode root = dfsBottomUp(p.left, p); // no modification of return value, every recursion call return the same value
-    p.left = (parent == null) ? parent : parent.right;
+    p.left = (parent == null) ? parent : parent.right; // NOTE!!!!!! edge case for root node who has no parent
     p.right = parent;
     return root;
   }

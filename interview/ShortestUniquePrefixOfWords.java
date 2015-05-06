@@ -7,7 +7,7 @@ output: {zebra: z, dog: dog, duck: du, dot: dot}
 {zebra:z, dog: dog, duck: du, dove: dov}
 
 [bearcat, bear]
-{bearcat: bearc, bear: ""}
+{bearcat: bearc, bear: ""} // note for "bear", even last char 'r' has dup 2, so return ""
  */
 
 /*
@@ -43,7 +43,7 @@ public class ShortestUniquePrefixOfWords {
       PrefixTreeNode tmp = root;
       char[] array = word.toLowerCase().toCharArray();
       for (int i = 0; i < array.length; ++i) {
-        if (tmp.next[array[i] - 'a'] == null)  return null;
+        if (tmp.next[array[i] - 'a'] == null)  return "";
         else if (tmp.next[array[i] - 'a'].count == 1) return word.substring(0, i + 1);
         else tmp = tmp.next[array[i] - 'a'];
       }
