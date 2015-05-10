@@ -5,6 +5,34 @@
  Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut.
 */
 
+
+// Use a 2d matrix to reduce palindrome checking from O(n) to O(1)
+// time: O(n^2); space: O(n^2)
+public class Solution {
+  public int minCut(String s) {
+    if (s==null || s.length()==0)
+      return 0;
+    int N = s.length();
+    int[] dp = new int[N+1];
+    boolean[][] isP = new boolean[N][N];
+    for (int i=0; i<N; i++)
+      isP[i][i] = true;
+    // if the whole string is a palindrome, we still increment by 1. So, we need to set initial value to -1
+    dp[0] = -1;
+    for (int i=1; i<=N; i++){
+      dp[i] = i-1; // at most cut i-1 to make a length i string has i partition, each length 1 string must be palindrome
+      for (int j=0; j<=i-1; j++){// j=0 means no cut, j means leave j chars the left and check if right part is a palindrome, dp[j] is the min cut for left part
+        if (s.charAt(j)==s.charAt(i-1) &&(j+1>i-2 || isP[j+1][i-2])){
+          isP[j][i-1] = true;
+          dp[i] = Math.min(dp[i], dp[j]+1); // right part count 1 cut
+        }
+      }
+    }
+    return dp[N];
+  }
+}
+
+
 // dp: use two dp, one dp for mincut, another dp for check palindrome
 // palin[i][j] denote string[i,j] is palindrome
 public class Solution {
@@ -24,31 +52,5 @@ public class Solution {
       dp[i] = min +1;
     }
     return dp[len];
-  }
-}
-
-// Use a 2d matrix to reduce palindrome checking from O(n) to O(1)
-// time: O(n^2); space: O(n^2)
-public class Solution {
-  public int minCut(String s) {
-    if (s==null || s.length()==0)
-      return 0;
-    int N = s.length();
-    int[] dp = new int[N+1];
-    boolean[][] isP = new boolean[N][N];
-    for (int i=0; i<N; i++)
-      isP[i][i] = true;
-    // if the whole string is a palindrome, we still increment by 1. So, we need to set initial value to -1
-    dp[0] = -1;
-    for (int i=1; i<=N; i++){
-      dp[i] = i-1;
-      for (int j=0; j<=i-1; j++){
-        if (s.charAt(j)==s.charAt(i-1) &&(j+1>i-2 || isP[j+1][i-2])){
-          isP[j][i-1] = true;
-          dp[i] = Math.min(dp[i], dp[j]+1);
-        }
-      }
-    }
-    return dp[N];
   }
 }
